@@ -7,15 +7,25 @@
     <link rel="shortcut icon" href="luz.jpg" type="image/x-icon" />
     <link
       rel="stylesheet"
-      href="https://bootswatch.com/5/minty/bootstrap.min.css"
+      href="https://bootswatch.com/5/journal/bootstrap.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
       <h2>Frase del día</h2>
-      <img class="frase-icon" src="luz.jpg" alt="" />
+      <!--<img class="frase-icon" src="luz.jpg" alt="" />-->
     </header>
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-info circle-btn" id="btn-mi-frase">Obtener mi frase</button>
+        </div>
+        <div class="col-md-6">
+          <div id="mi-frase-div" class="p-1"></div>
+        </div>
+      </div>
+    </div>
     <div class="container p-2">
       <div class="row">
         <div class="col-md-6">

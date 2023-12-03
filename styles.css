@@ -8,7 +8,8 @@ form{
     padding: 5px;
     border-radius: 10px;
     border: 1px solid white;
-    background-color: #d7bac4;
+    background-color: rgb(44, 89, 143);
+    color: #fff;
 }
 
 select, input{
@@ -28,4 +29,17 @@ header{
 }
 .editing{
     background-color:  #d1c8de ;
+}
+#mi-frase-div{
+    background-color:palevioletred;
+    margin-top: 5px;
+    padding: 5px auto;
+    font-size: 20px;
+    border-radius: 10px;
+}
+.circle-btn{
+    width: 100px;
+    height: 100px;
+    font-size: 14px;
+    border-radius: 50%;
 }

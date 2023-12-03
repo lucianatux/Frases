@@ -10,7 +10,8 @@ import {
 const frasesContainer = document.getElementById("frasesContainer");
 const fraseForm = document.getElementById("fraseForm");
 const cardTitle = document.getElementById("card-title");
-const cardBody = document.querySelector(".card-body");
+const btnMiFrase = document.getElementById("btn-mi-frase");
+const miFraseDiv = document.getElementById("mi-frase-div");
 
 let editStatus = false;
 let id = "";
@@ -23,18 +24,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       const frase = doc.data();
       html += `
       <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Frase</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
         <tbody>
           <tr class="table-light">
-            <td>${frase.frase}</td>
-            <td><button class="btn btn-secondary btn-delete" data-id="${doc.id}">Borrar</button></td>
-            <td><button class="btn btn-info btn-edit" data-id="${doc.id}">Editar</button></td>
+            <td>${frase.frase}
+            <hr/>
+            <button class="btn btn-secondary btn-delete" data-id="${doc.id}"><span>&#128465;</span></button>
+            <button class="btn btn-info btn-edit" data-id="${doc.id}"><span>&#9998;</span></button></td>
           </tr>
         </tbody>
         </table> 
@@ -85,4 +80,8 @@ fraseForm.addEventListener("submit", (e) => {
   }
 
   fraseForm.reset();
+});
+
+btnMiFrase.addEventListener("click", (e) => {
+  miFraseDiv.innerText= "hola";
 });
