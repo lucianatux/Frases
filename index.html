@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frase</title>
+    <link rel="shortcut icon" href="luz.jpg" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/minty/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h2>Frase del día</h2>
+      <img class="frase-icon" src="luz.jpg" alt="" />
+    </header>
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 id="card-title">Añadir frase</h4>
+              <form id="fraseForm"> 
+                <label for="frase">Frase:</label>
+                <input type="text" id="frase" name="frase" required />            
+                <button id="fraseSubmit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" id="frasesContainer"></div>
+      </div>
+    </div>
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-md-6" id="week">Semana</div>
+        <div class="col-md-6" id="month">Mes</div>
+      </div>
+    </div>
+
+    <script type="module" src="firebase.js"></script>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
