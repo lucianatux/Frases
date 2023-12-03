@@ -82,6 +82,24 @@ fraseForm.addEventListener("submit", (e) => {
   fraseForm.reset();
 });
 
-btnMiFrase.addEventListener("click", (e) => {
-  miFraseDiv.innerText= "hola";
+
+
+btnMiFrase.addEventListener("click", async (e) => {
+  // Obtener todas las frases desde la base de datos
+  const frasesSnapshot = await getFrases();
+
+  // Verificar si hay al menos una frase
+  if (!frasesSnapshot.empty) {
+    // Obtener frases como un array
+    const frasesArray = frasesSnapshot.docs.map((doc) => doc.data().frase);
+
+    // Elegir una frase al azar del array
+    const fraseAleatoria = frasesArray[Math.floor(Math.random() * frasesArray.length)];
+
+    // Mostrar la frase en el miFraseDiv
+    miFraseDiv.innerText = fraseAleatoria;
+  } else {
+    // Manejar el caso en que no haya frases en la base de datos
+    miFraseDiv.innerText = "No hay frases disponibles";
+  }
 });
