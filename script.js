@@ -7,6 +7,7 @@ import {
   updateFrase,
 } from "./firebase.js";
 
+window.addEventListener("DOMContentLoaded", async () => {
 const frasesContainer = document.getElementById("frasesContainer");
 const fraseForm = document.getElementById("fraseForm");
 const cardTitle = document.getElementById("card-title");
@@ -16,7 +17,6 @@ const miFraseDiv = document.getElementById("mi-frase-div");
 let editStatus = false;
 let id = "";
 
-window.addEventListener("DOMContentLoaded", async () => {
   onGetFrases((querySnapshot) => {
     let html = "";
 
@@ -38,7 +38,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     frasesContainer.innerHTML = html;
     const btnsDelete = frasesContainer.querySelectorAll(".btn-delete");
     btnsDelete.forEach((btn) => {
-      btn.addEventListener("click", (event) => {
+      btn.addEventListener("click", async(event) => {
         deleteFrase(event.target.dataset.id);
       });
     });
@@ -46,9 +46,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     const btnsEdit = frasesContainer.querySelectorAll(".btn-edit");
     btnsEdit.forEach((btn) => {
       btn.addEventListener("click", async (e) => {
-        const frase = await getThisFrase(e.target.dataset.id);
-        console.log(e.target.dataset.id);
-        console.log(frase);
+        let frase = await getThisFrase(e.target.dataset.id);
+        console.log("id", e.target.dataset.id);
+        console.log("frase", frase);
         fraseForm["frase"].value = frase.frase;
         editStatus = true;
         id = e.target.dataset.id;
@@ -58,48 +58,48 @@ window.addEventListener("DOMContentLoaded", async () => {
       });
     });
   });
+
+  fraseForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const frase = fraseForm["frase"];
+  
+    if (!editStatus) {
+      saveFrase(
+        frase.value
+      );
+    } else {
+      console.log("editando");
+      updateFrase(id, {
+        frase: frase.value,
+      });
+      editStatus = false;
+      fraseForm.classList.remove("editing");
+      cardTitle.innerText= "Añadir Frase";
+      fraseForm["fraseSubmit"].innerText = "Guardar";
+    }
+  
+    fraseForm.reset();
+  });
+  
+  btnMiFrase.addEventListener("click", async (e) => {
+    // Obtener todas las frases desde la base de datos
+    const frasesSnapshot = await getFrases();
+  
+    // Verificar si hay al menos una frase
+    if (!frasesSnapshot.empty) {
+      // Obtener frases como un array
+      const frasesArray = frasesSnapshot.docs.map((doc) => doc.data().frase);
+  
+      // Elegir una frase al azar del array
+      const fraseAleatoria = frasesArray[Math.floor(Math.random() * frasesArray.length)];
+  
+      // Mostrar la frase en el miFraseDiv
+      miFraseDiv.innerText = fraseAleatoria;
+    } else {
+      // Manejar el caso en que no haya frases en la base de datos
+      miFraseDiv.innerText = "No hay frases disponibles";
+    }
+  });
 });
 
-fraseForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const frase = fraseForm["frase"];
 
-  if (!editStatus) {
-    saveFrase(
-      frase.value
-    );
-  } else {
-    console.log("editando");
-    updateFrase(id, {
-      frase: frase.value,
-    });
-    editStatus = false;
-    fraseForm.classList.remove("editing");
-    cardTitle.innerText= "Añadir Frase";
-    fraseForm["fraseSubmit"].innerText = "Guardar";
-  }
-
-  fraseForm.reset();
-});
-
-
-
-btnMiFrase.addEventListener("click", async (e) => {
-  // Obtener todas las frases desde la base de datos
-  const frasesSnapshot = await getFrases();
-
-  // Verificar si hay al menos una frase
-  if (!frasesSnapshot.empty) {
-    // Obtener frases como un array
-    const frasesArray = frasesSnapshot.docs.map((doc) => doc.data().frase);
-
-    // Elegir una frase al azar del array
-    const fraseAleatoria = frasesArray[Math.floor(Math.random() * frasesArray.length)];
-
-    // Mostrar la frase en el miFraseDiv
-    miFraseDiv.innerText = fraseAleatoria;
-  } else {
-    // Manejar el caso en que no haya frases en la base de datos
-    miFraseDiv.innerText = "No hay frases disponibles";
-  }
-});

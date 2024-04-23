@@ -48,18 +48,31 @@ export const deleteFrase = id => {
 }
 
 export const getThisFrase = async (id) => {
-  const docRef = doc(db, 'frases', id);
-  const docSnap = await getDoc(docRef);
+  console.log("getThisFrase recibió el ID:", id);
 
-  if (docSnap.exists()) {
-    // El documento existe, puedes acceder a los datos con docSnap.data()
-    return docSnap.data();
+  if (id && typeof id === 'string') {
+    try {
+      const docRef = doc(db, 'frases', id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // El documento existe, puedes acceder a los datos con docSnap.data()
+        return docSnap.data();
+      } else {
+        throw new Error('No existe el documento.');
+      }
+    } catch (error) {
+      console.error(`Error al obtener la frase: ${error.message}`);
+      throw error; // Propaga el error para que el código que llama pueda manejarlo
+    }
   } else {
-    console.log('No existe el documento.');
-    return null;
+    throw new Error('ID no válido al intentar obtener la frase.');
   }
 };
 
+
 export const updateFrase = (id, newFields) => {
+  console.log(id);
   updateDoc(doc(db, 'frases', id), newFields);
+
 };
